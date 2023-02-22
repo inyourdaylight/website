@@ -1,25 +1,60 @@
 <template>
-  <div class="nav">
-    <transition :key="hour+minute" appear>
-      <p :class="`time ${showNav ? `blue` : ``}`">
-        <TimeSun class="sun" :color="showNav ? `#1B2227` : ``"></TimeSun>
-        <span v-html="hour"></span>:<span v-html="minute"></span>
-      </p>
-    </transition>
-    <div class="logo">
-      <a href="/">
-        <img src="../assets/IYD-White-Small.svg"/>
-      </a>
+  <div :class="`nav ${navColor}`" id="nav">
+    <div class="languages">
+      <ul>
+        <li class="active">
+          EN
+        </li>
+        <li>
+          FR
+        </li>
+        <li>
+          한국어
+        </li>
+        <li>
+          中文
+        </li>
+      </ul>
     </div>
     <div class="scrollbar" ref="scrollbar">
-      <img src="../assets/glow-sphere.svg" ref="glow"/>
+      <GlowSphere src="../assets/glow-sphere.svg" class="scroll-handle" :color="navColor === 'navDark' ? `#1B2227` : `white`"/>
     </div>
-    <div class="hamburger" id="hamburgerMenu">
+    <div :class="`hamburger ${showNav ? `blue` : ``}`" id="hamburgerMenu">
       <div class="line top"></div>
       <div class="line mid"></div>
       <div class="line bot"></div>
     </div>
-  
+    <div class="logo">
+      <a href="./">
+        <!-- <img src="../assets/IYD-White-Small.svg"/> -->
+        <IYDLogo></IYDLogo>
+      </a>
+    </div>
+    <transition :key="hour+minute" appear>
+            <p :class="`time ${showNav ? `blue` : ``}`">
+              <TimeSun class="sun" v-show="hour < 18" :color="showNav ? `#1B2227` : ``"></TimeSun>
+              <TimeMoon class="sun" v-show="hour > 18" :color="showNav ? `#1B2227` : ``"></TimeMoon>
+              <span v-html="hour"></span><span>:</span><span v-html="minute"></span>
+            </p>
+          </transition>
+    <div class="desktop-nav">
+      <ul class="menuleft">
+        <li v-for="(item, i) in menuleft" :key="i" class="menuitemleft">
+          <router-link :to="item.link">{{ item.text }}</router-link>
+        </li>
+      </ul>
+      <li class="logo">
+          <a href="./">
+            <!-- <img src="../assets/IYD-White-Small.svg"/> -->
+            <IYDLogo></IYDLogo>
+          </a>
+        </li>
+      <ul class="menuright">
+        <li v-for="(item, i) in menuright" :key="i" class="menuitemright">
+          <router-link :to="item.link">{{ item.text }}</router-link>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -44,12 +79,23 @@ export default {
     showNav: {
       type: Boolean,
       default: false
+    },
+    navColor: {
+      type: String,
+      default: "darkNav"
+    },
+    clickEvents: {
+      type: Object,
+      default: () => {}
     }
   },
   watch: {
     scrollPos(scrollPos) {
-      let glowSize = this.$refs.glow.getBoundingClientRect().height;
-      this.$refs.glow.style = `top: ${scrollPos * ((this.scrollBarHeight - (glowSize) / 2) / this.scrollLimit)}px`
+      // let glowSize = this.$refs.glow.getBoundingClientRect().height;
+      document.getElementsByClassName("scroll-handle")[0].style = `transform: translateY(${scrollPos * ((this.scrollBarHeight) / this.scrollLimit)}px) translateX(-50%)`;
+    },
+    clickEvents(e) {
+      this.scroller(e);
     },
     showNav(showNav) {
       if (showNav) {
@@ -57,9 +103,29 @@ export default {
       } else {
         toRaw(this.timeline).reverse();
       }
-    }
+    },
+    // navColor(e) {
+    //   console.log(e);
+    // }
   },
   methods: {
+    scroller(e) {
+
+      if (e.target.className.includes("scroll-handle")) {
+         window.addEventListener("mousemove", this.scrollDrag);
+         window.addEventListener("mouseup", this.removeScrollDrag);
+      }
+    },
+    scrollDrag(e) {
+      let scrollbarTop = this.$refs.scrollbar.getBoundingClientRect().top;
+      let scrollbarHeight = this.$refs.scrollbar.getBoundingClientRect().height;
+      let move = Math.min((Math.max((e.clientY - scrollbarTop), 0)), scrollbarHeight);
+      document.getElementsByClassName("scroll-handle")[0].style = `transform: translateY(${move}px) translateX(-50%);`;
+      window.scrollTo(0, move * (this.scrollLimit / scrollbarHeight));
+    },
+    removeScrollDrag() {
+      window.removeEventListener("mousemove", this.scrollDrag);
+    },
     getTime() {
       this.date = new Date();
       this.minute = this.date.getMinutes().toString().padStart(2, '0');
@@ -78,7 +144,9 @@ export default {
       scrollBarHeight: 0,
       minute:0,
       hour:0,
-      timeline: new gsap.timeline()
+      timeline: new gsap.timeline(),
+      menuleft: [],
+      menuright: []
     }
   },
   
@@ -87,7 +155,12 @@ export default {
     this.getTime();
     this.scrollBarHeight = this.$refs.scrollbar.getBoundingClientRect().height;
     let countdownTilMinuteInterval = (60 - this.date.getSeconds()) * 1000 + this.date.getMilliseconds();
+    this.$nextTick(() => {
+      // this.menuleft = this.$cms.nav.split(Math.ceil($cms.nav.length / 2));
+      this.menuleft = [...this.$cms.nav].splice(0, Math.ceil(this.$cms.nav.length / 2));
+      this.menuright = [...this.$cms.nav].splice(Math.ceil(this.$cms.nav.length / 2));
 
+    })
     setTimeout(() => {
       this.getTime();
       setInterval(() => {
@@ -102,13 +175,14 @@ export default {
 <style lang="scss" scoped>
 @import "../styles.scss";
 .time {
-  color: $gold;
+  color: white;
   position: fixed;
   z-index: 10;
   top: 20px;
   transition: all .5s ease .5s;
   left: 20px;
   margin: 0;
+  // padding-left: 20px;
   .sun {
     display: inline-block;
     min-width: 40px;
@@ -119,16 +193,18 @@ export default {
 .blue {
   color: #1B2227;
   transition: all .5s ease .5s;
+  mix-blend-mode: normal !important;
 }
 .logo {
   position: fixed;
   left: 50%;
+  // left: 140px;
   top: 20px;
-  transform: translateX(-50%);
+  transform: translateX(-50%) translateY(-50%);
   z-index: 10;
-  img {
-    max-width: 100px;
-  }
+  // mix-blend-mode: difference;
+  display: inline-block;
+  vertical-align: middle;
 }
 .scrollbar {
   position: fixed;
@@ -137,19 +213,30 @@ export default {
   border-right: 1px solid white;
   top: 50%;
   transform: translateY(-50%);
-  img {
+  z-index: 4;
+  // mix-blend-mode: difference;
+  @media screen and (max-width: $mobiledown) {
+    display: none;
+  }
+  .scroll-handle {
     position: absolute;
     left: 50%;
-    transform: translateX(-50%) translateY(-50%);
-    top: 0;
+    transform: translateX(-50%);
+    top: -23px;
+    cursor: pointer;
   }
 }
 .hamburger {
+  @media screen and (min-width: $mobileup) {
+    display: none;
+  }
   position: fixed;
   right: 20px;
   top: 30px;
   z-index: 10;
   cursor: pointer;
+  // mix-blend-mode: difference;
+
   img {
     width: 30px;
   }
@@ -161,5 +248,78 @@ export default {
   height: 1px;
   margin-bottom: 6px;
   border-top: 1px solid white;
+}
+.desktop-nav {
+  @media screen and (max-width: $mobiledown) {
+    display: none;
+  }
+  position: fixed;
+  // right: 20px;
+  top: 20px;
+  li {
+    transform: translateY(-50%);
+  }
+  z-index: 4;
+  li {
+    cursor: pointer;
+  }
+  a {
+    color: white;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: $gold;
+  }
+  
+ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    li {
+      display: inline-block;
+      padding: 0 15px;
+    }
+  }
+}
+.navDark {
+  .scrollbar {
+    border-color: $darkblue;
+  }
+  a, span, .sun {
+    color: $darkblue;
+    &:after, &:before {
+      background: $darkblue;
+    }
+  }
+}
+.languages {
+  @media screen and (max-width: $mobiledown) {
+    display: none;
+  }
+  position: fixed;
+  left: 20px;
+  top: 50vh;
+  z-index: 10;
+  transform: translateY(-50%);
+  ul {
+    list-style: none;
+    padding: 0;
+    line-height: 1.5;
+  }
+  .active {
+    color: $gold;
+  }
+}
+.menuleft, .menuright {
+  position: fixed;
+  display: inline-block;
+  top: 40px;
+}
+.menuleft {
+  text-align: right;
+  right: calc(50% + 50px);
+}
+.menuright {
+  text-align: left;
+  left: calc(50% + 50px);
 }
 </style>

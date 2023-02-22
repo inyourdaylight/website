@@ -1,37 +1,33 @@
+$headingfont: "DomaineDispSemibold";
 @font-face {
-    font-family: 'Joane Bold';
-    src: url('../public/fonts/Joane Stencil Bold/JoaneStencil-Bold.ttf') format('truetype');
-    src:url('../public/fonts/Joane Stencil Bold/JoaneStencil-Bold.woff2') format('woff2'),
-        url('../public/fonts/Joane Stencil Bold/JoaneStencil-Bold.woff') format('woff'),
-        url('../public/fonts/Joane Stencil Bold/JoaneStencil-Bold.eot') format('embedded-opentype');
+    font-family: 'Heading';
+    src: url('@/assets/fonts/Heading/' + $headingfont + '.ttf') format('truetype');
+    src:url('@/assets/fonts/Heading/' + $headingfont + '.woff2') format('woff2'),
+        url('@/assets/fonts/Heading/' + $headingfont + '.woff') format('woff'),
+        url('@/assets/fonts/Heading/' + $headingfont + '.eot') format('embedded-opentype');
         font-weight: 400;
         font-style: normal;
 }
+$subheadingfont: "DomaineDispSemibold";
 @font-face {
-    font-family: 'Joane Light';
-    src: url('../public/fonts/Joane Stencil Thin/JoaneStencil-Thin.ttf') format('truetype');
-    src:url('../public/fonts/Joane Stencil Thin/JoaneStencil-Thin.woff2') format('woff2'),
-        url('../public/fonts/Joane Stencil Thin/JoaneStencil-Thin.woff') format('woff'),
-        url('../public/fonts/Joane Stencil Thin/JoaneStencil-Thin.eot') format('embedded-opentype');
+    font-family: 'Subheading';
+    src: url('@/assets/fonts/Subheading/' + $subheadingfont +'.ttf') format('truetype');
+    src:url('@/assets/fonts/Subheading/' + $subheadingfont +'.woff2') format('woff2'),
+        url('@/assets/fonts/Subheading/' + $subheadingfont +'.woff') format('woff'),
+        url('@/assets/fonts/Subheading/' + $subheadingfont +'.eot') format('embedded-opentype');
         font-weight: 400;
         font-style: normal;
 }
+$bodyfont: "Reader";
 @font-face {
-    font-family: 'Founders Grotesk Light';
-    src: url('../public/fonts/Founders Grotesk Light/FoundersGroteskText-Light.ttf') format('truetype');
-    src:url('../public/fonts/Founders Grotesk Light/FoundersGroteskText-Light.woff2') format('woff2'),
-        url('../public/fonts/Founders Grotesk Light/FoundersGroteskText-Light.woff') format('woff'),
-        url('../public/fonts/Founders Grotesk Light/FoundersGroteskText-Light.eot') format('embedded-opentype');
+    font-family: 'Body';
+    src: url('@/assets/fonts/Body/' + $bodyfont + '.ttf') format('truetype');
+    src:url('@/assets/fonts/Body/' + $bodyfont + '.woff2') format('woff2'),
+        url('@/assets/fonts/Body/' + $bodyfont + '.woff') format('woff'),
+        url('@/assets/fonts/Body/' + $bodyfont + '.eot') format('embedded-opentype');
         font-weight: 400;
         font-style: normal;
 }
-$heading: "Joane Bold";
-$headinglight: "Joane Light";
-$body: "Founders Grotesk Light";
-
-p {
-    font-family: $body;
-}
-h1 {
-    font-family: $heading;
-}
+$heading: "Heading";
+$subheading: "Subheading";
+$body: "Body";

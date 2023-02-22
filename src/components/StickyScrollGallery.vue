@@ -41,6 +41,10 @@
 export default {
   name: 'HelloWorld',
   props: {
+    clickEvents: {
+      type: Object,
+      default: () => {}
+    }
   },
   watch: {},
   methods: {

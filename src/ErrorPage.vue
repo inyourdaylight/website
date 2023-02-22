@@ -2,10 +2,8 @@
   <div class="error-404">
     <div class="message">
       <h1>404! Page not found!</h1>
-      <a href="/">
-        <div class="cta">
-            <span>Go Back</span>
-        </div>
+      <a href="/" class="cta">
+        <p>Go Back</p>
     </a>
     </div>
   </div>    

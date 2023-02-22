@@ -1,11 +1,11 @@
 <template>
   <div class="header-nav-screen">
     <ul class="menu">
-        <li v-for="(item, i) in nav" :key="i">
+        <li v-for="(item, i) in $cms.nav" :key="i">
            <transition appear name="menu-item">
             <h1 class="menu-item" v-show="showNav" :style="`transition-delay: ${((i+1)*100) + 100}ms`">
-                <a :href="item.link">{{ item.text }}
-            </a></h1>
+                <router-link id="closeNav" :to="item.link">{{ item.text }}
+            </router-link></h1>
            </transition>
         </li>
     </ul>
@@ -18,7 +18,11 @@ export default {
   props: {
     showNav: {
         type: Boolean,
-        defauly: false
+        default: false
+    },
+    clickEvents: {
+      type: Object,
+      default: () => {}
     }
   },
   watch: {
@@ -29,28 +33,6 @@ export default {
   data() {
     return {
         timeout: null,
-        nav: [
-            {
-                text: "About",
-                link: null
-            },
-            {
-                text: "Who we are",
-                link: "./who-we-are"
-            },
-            {
-                text: "contact",
-                link: null
-            },
-            {
-                text: "menu item",
-                link: null
-            },
-            {
-                text: "menu item 2",
-                link: null
-            },
-        ]
     }
   },
   mounted() {
@@ -88,6 +70,12 @@ export default {
 .menu-item {
     transition: all .5s ease-in-out;
     transform: translateY(0%);
+    a {
+      font-size: 30px;
+      text-transform: capitalize;
+      color: $darkblue;
+      line-height: 1.5;
+    }
 }
 a {
     text-decoration: none;

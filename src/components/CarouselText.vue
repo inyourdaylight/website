@@ -1,23 +1,23 @@
 <template>
   <div class="carousel-text">
-    <img class="sun" src="../assets/Sun-animated.svg"/>
+    <!-- <img class="sun" src="../assets/Sun-animated.svg"/> -->
         <div class="text-content">
             <h2 ref="title" class="text" v-if="text">
-                <span class="pre">We Speak</span>
-                <div class="carousel-container">
+                <span class="pre animate-fade-in">We Speak</span>
+                <div class="carousel-container animate-fade-in">
                     <span class="row1" ref="row">
-                      <transition-group v-for="(item, i) in titleCount" :key="i">
-                        <span :key="i+''">{{ text }}</span>
+                      <transition-group v-for="(item, i) in titleCount + 1" :key="i">
+                        <span :key="i+''" v-html="text"></span>
                         </transition-group>
                     </span>
                     <span class="row2">
-                      <transition-group v-for="(item, i) in titleCount" :key="i">
-                        <span :key="i+''">{{ text }}</span>
+                      <transition-group v-for="(item, i) in titleCount + 1" :key="i">
+                        <span :key="i+''" v-html="text"></span>
                       </transition-group>
                     </span>
                 </div>
             </h2>
-            <p class="blurb">Overall, your brand or company's goal is to make higher revenue or to scale up. But before you do it, you should check if you are customer-centric, which means that your business is done with setting up all the ways that people can find you and get to know you. In order to complete it, you should be an amazing communicator. Effective communication is surely required to have best online presence and be active online not staying behind the scenes.</p>
+            <p class="blurb animate-fade-in animate-delay-250">Overall, your brand or company's goal is to make higher revenue or to scale up. But before you do it, you should check if you are customer-centric..</p>
         </div>
   </div>
 </template>
@@ -29,22 +29,25 @@ import { Linear } from "gsap";
 export default {
   name: 'CarouselText',
   props: {
+    clickEvents: {
+      type: Object,
+      default: () => {}
+    }
   },
   watch: {
     titleCount: {
       handler() {
-        setTimeout(() => {
+        this.$nextTick(() => {
           this.animatedTitle();
-        }, 100);
+        })
       }
     },
   },
   methods: {
     animatedTitle() {
       this.rowWidth = this.$refs.row.getBoundingClientRect().width;
-      console.log(this.rowWidth);
       toRaw(this.timeline).to(".row2", {x: this.rowWidth,  duration: 0, ease:Linear.easeNone}, 0);
-      toRaw(this.timeline).to(".row1", {x: -((this.rowWidth - window.innerWidth) + window.innerWidth),  duration: this.duration, ease:Linear.easeNone }, 0);
+      toRaw(this.timeline).to(".row1", {x: -((this.rowWidth - window.innerWidth)+ window.innerWidth) ,  duration: this.duration, ease:Linear.easeNone }, 0);
       toRaw(this.timeline).to(".row2", {x: 0,  duration: this.duration, ease:Linear.easeNone }, 0);
       toRaw(this.timeline).repeat();
         
@@ -58,10 +61,10 @@ export default {
       //   'Français',
       //   'English'
       // ],
-      text: `한국어  中文  Français  English`,
+      text: `한국어 &nbsp;&nbsp; 中文 &nbsp;&nbsp; Français &nbsp;&nbsp; English &nbsp;`,
       rowWidth:0,
       timeline: new gsap.timeline({repeat: -1}),
-      titleCount:1,
+      titleCount:2,
       duration: 30
     }
   },
@@ -85,7 +88,7 @@ export default {
     z-index: 0;
 }
 .carousel-text {
-    height: 100vh;
+    height: 60vh;
     position: relative;
     overflow: hidden;
 }
@@ -113,9 +116,9 @@ export default {
     left: 0;
     transform: translateY(-50%);
     color: $gold;
-    text-transform: uppercase;
+    // text-transform: uppercase;
     font-size: 60px;
-    font-family: "Joane Bold";
+    font-family: $heading;
     white-space:nowrap;
     top: 50%;
   }
@@ -124,6 +127,7 @@ export default {
     color: white;
     // transform: translateY(-100%);
     display: block;
+    font-size: 30px;
 }
 .carousel-container {
     position: relative;
@@ -132,6 +136,7 @@ export default {
 .blurb {
     text-align: center;
     max-width: 600px;
+    width: calc(100% - 40px);
     margin: auto;
     padding-top: 40px;
     text-shadow: 0px 0px 20px #1B2227;
@@ -140,5 +145,6 @@ export default {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
+    padding: 40px 0;
 }
 </style>

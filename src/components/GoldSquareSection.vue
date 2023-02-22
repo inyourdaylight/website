@@ -7,31 +7,35 @@
           <table>
             <tr class="row">
               <td class="left">
-                <h2>Create</h2>
+                <h2 class="animate-fade-right animate-delay-250">Create</h2>
               </td>
               <td class="right">
-                <h2>Your</h2>
+                <h2 class="animate-fade-left animate-delay-500">Your</h2>
               </td>
             </tr>
             <tr class="row">
               <td class="left">
-                <h2>Own</h2>
+                <h2 class="animate-fade-right animate-delay-750">Own</h2>
               </td>
               <td class="right">
-                <h2>Value</h2>
+                <h2 class="animate-fade-left animate-delay-1000">Value</h2>
               </td>
             </tr>
-            <tr>
+            <tr class="text-tr">
               <td>
-                <p>
+                <p class="animate-fade-in">
                   Overall, your brand or company's goal is to make higher revenue or to scale up.
                   But before you do it, you should check if you are customer-centric, which means that your business is done with setting up all the ways that people can find you and get to know you.
-                  In order to complete it, you should be an amazing communicator.
-                  Effective communication is surely required to have best online presence and be active online not staying behind the scenes.
                 </p>
               </td>
             </tr>
           </table>
+          <div class="text-tr-mobile">
+              <p class="animate-fade-in">
+                  Overall, your brand or company's goal is to make higher revenue or to scale up.
+                  But before you do it, you should check if you are customer-centric, which means that your business is done with setting up all the ways that people can find you and get to know you.
+                </p>
+            </div>
       </div>
     </div>
    </div>
@@ -42,8 +46,14 @@
 export default {
   name: 'GoldSquareSection',
   props: {
+    clickEvents: {
+      type: Object,
+      default: () => {}
+    }
   },
-  watch: {},
+  watch: {
+    
+  },
   methods: {
 
   },
@@ -61,11 +71,17 @@ export default {
 <style lang="scss" scoped>
 @import "../styles.scss";
 .golden-section {
-    min-height: 50vh;
     position: relative;
-    width: calc(100vw - 180px);
-    padding: 40px;
     margin: auto;
+    @media screen and (min-width: $mobileup) {
+      min-height: 50vh;
+      width: calc(100vw - 180px);
+      padding: 40px;
+    }
+    @media screen and (max-width: $mobiledown) {
+      padding: 20px;
+      width: calc(100vw - 40px);
+    }
 }
 
 
@@ -90,11 +106,17 @@ export default {
     margin: auto;
     background: #DBAA47;
     border-radius: 24px;
-    padding: 40px;
+    @media screen and (min-width: $mobileup) {
+      padding: 10px;
+    }
+    @media screen and (min-width: $mobileup) {
+      padding: 40px;
+    }
 }
 .text {
   width: 100%;
   text-align: right;
+  padding: 20px 0;
 }
 p {
   color: $darkblue;
@@ -105,8 +127,10 @@ p {
 }
 h2 {
     color: $darkblue;
-    font-family: "Joane Bold";
     font-size: 60px;
+    @media screen and (max-width: $mobiledown) {
+      font-size: 30px;
+    }
     margin: 0;
     line-height: 1.5;
     display: inline-block;
@@ -125,12 +149,33 @@ h2 {
 .col {
   display: inline-block;
 }
+
+table {
+  width: 100%;
+}
 .row {
   // padding-bottom: 50px;
   width: 100%;
   // display: inline-block;
   td {
     width: 50%;
+    overflow: hidden;
+  }
+}
+.text-tr-mobile {
+  @media screen and (min-width: $mobileup) {
+    display: none;
+  }
+  p {
+    margin: auto;
+    text-align: center;
+    padding-bottom: 10px;
+    width: calc(100% - 10px);
+  }
+}
+.text-tr {
+  @media screen and (max-width: $mobiledown) {
+    display: none;
   }
 }
 </style>

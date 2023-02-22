@@ -1,12 +1,14 @@
 <template>
   <div class="images">
-   <div v-for="(item, i) in images" :key="i" class="tile">
+   <div v-for="(item, i) in data.images" :key="i" class="tile">
     <img :src="item.src" :style="`margin-left: ${item.offset.x}px; margin-top: ${item.offset.y}px;`"/>
   </div>
   <div class="see-more">
     <div class="inner">
-      <h2>See more of our projects...</h2>
-      <a class="cta">See More</a>
+      <h2 class="animate-fade-in">{{ data.cta_text }}</h2>
+      <a class="cta animate-fade-in animate-delay-500" :href="data.cta.link">
+        <p>{{ data.cta.text }}</p>
+      </a>
     </div>
   </div>
   </div>
@@ -16,6 +18,14 @@
 export default {
   name: 'ImagesGallery',
   props: {
+    data: {
+      type: Object,
+      default: () => {}
+    },
+    clickEvents: {
+      type: Object,
+      default: () => {}
+    }
   },
   watch: {},
   methods: {
@@ -23,23 +33,6 @@ export default {
   },
   data() {
     return {
-      images: [
-        {
-            src: require("../assets/placeholdersize1.png"),
-            link: '',
-            offset: {x: 0, y: 0}
-        },
-        {
-            src: require("../assets/placeholdersize2.png"),
-            link: '',
-            offset: {x: -80, y: 100}
-        },
-        {
-            src: require("../assets/placeholdersize3.png"),
-            link: '',
-            offset: {x: 0, y: 0}
-        }
-      ]
     }
   },
   mounted() {
@@ -57,7 +50,10 @@ export default {
   // width: 33%;
   img {
     max-height: 60vh;
-    max-width: 28vw;
+    max-width: 22vw;
+    @media screen and (max-width: $mobiledown) {
+      max-width: 50vw;
+    }
     padding: 20px;
   }
 }
@@ -67,11 +63,30 @@ export default {
   padding: 40px 0;
 }
 .see-more {
-  width: 33%;
-  margin-left: auto;
+  width: 100%;
+  max-width: 90%;
+  text-align: center;
+  // margin-left: auto;
+  margin: auto;
+  h2 {
+    margin-bottom: 20px;
+  }
 }
 .inner {
   margin: 20px;
-  text-align: left;
+  // text-align: left;
+  position: relative;
+  text-align: center;
+  &:after {
+    content: '';
+    width: 50%;
+    position: absolute;
+    bottom: -60px;
+    border-bottom: 1px solid $gold;
+    height: 1px;
+    text-align: center;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
 </style>
