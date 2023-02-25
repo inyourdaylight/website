@@ -2,9 +2,8 @@
   <div class="text-and-faded-bg">
     <img class="bg" src="../assets/placeholder1.png"/>
    <div class="text">
-    <h2 class="animate-fade-in">In Your Daylight is a marketing agency Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
-    <p class="animate-fade-in animate-delay-500">
-      In Your Daylight is a marketing agency Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur varius metus quis leo auctor tincidunt. Maecenas tempor at orci eu posuere. Cras semper efficitur venenatis. Mauris vitae luctus mauris. Cras non erat et purus pellentesque elementum.
+    <h2 class="animate-fade-in">{{ data.title }}</h2>
+    <p class="animate-fade-in animate-delay-500" v-html="data.text">
     </p>
    </div>
   </div>
@@ -15,6 +14,10 @@ export default {
   name: 'TextandFadedBG',
   props: {
     clickEvents: {
+      type: Object,
+      default: () => {}
+    },
+    data: {
       type: Object,
       default: () => {}
     }
@@ -37,8 +40,8 @@ export default {
 <style lang="scss" scoped>
 @import "../styles.scss";
 .text-and-faded-bg {
-  min-height: calc(80vh - 120px);
-  margin: 0 10%;
+  min-height: calc(50vh - 120px);
+  margin: 0 100px;
   position: relative;
   padding: 60px 0;
   @media screen and (max-width: $mobiledown) {

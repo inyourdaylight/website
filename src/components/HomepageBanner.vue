@@ -15,7 +15,7 @@
                 <span class="invisible" :key="int+''">{{ phrases[0]}}</span>
             </span>
             <p>
-                We are a CDAP-certified multidisciplinary digital agency, specializing in Web Design and Development, Creative Marketing and Strategy, and Graphic Design.
+                We are a CDAP (Canada Digital Adoption Plan)-certified multidisciplinary digital agency, specializing in business development and digital marketing.
             </p>
         </h1>
     </transition>
@@ -43,7 +43,7 @@ export default {
   data() {
     return {
         phrases: [
-            'Daylight','Creativity','Marketing','Imagination','Success'
+            'Daylight','Business Development','Marketing','IT Support','Branding'
         ],
         images: [
             require('../assets/placeholdersize1.png'),
@@ -157,8 +157,9 @@ export default {
     opacity: 1;
     transition: all .5s ease;
     .phrase {
+        white-space: nowrap;
         color: $gold;
-        font-size: 100px;
+        font-size: 90px;
         @media screen and (max-width: $mobiledown) {
             font-size: 60px;
         }

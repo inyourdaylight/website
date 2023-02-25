@@ -4,7 +4,7 @@
     <div class="shine-gradient" ref="shine"></div>
     <div :class="`nav-background ${page ? page.bg === 'light' ? 'light-nav-background' : 'dark-nav-background' : ''} ${scrollPos > 50 ? 'show-nav-background' : 'hide-nav-background'}`"></div>
     <HeaderNav 
-    :clickEvents="clickEvent"
+    :clickEvents="mouseEvent"
     :scrollLimit="scrollLimit" 
     :scrollPos="scrollPos"
     :showNav="showNav"
@@ -65,12 +65,15 @@ export default {
         }
       }
     },
+    mousedown(e) {
+      this.mouseEvent = e;
+    },
     scroll() {
       this.scrollPos = window.scrollY;
       this.shineGradient(this.scrollPos);
     },
     shineGradient(scrollPos) {
-      var pos = Math.min(scrollPos, (window.innerHeight * .5));
+      var pos = Math.min(scrollPos, (window.innerHeight * .8));
       this.$refs.shine.style = `transform: translateY(${ (window.innerHeight * .5) - pos}px)`;
     }
   },
@@ -80,13 +83,15 @@ export default {
       scrollLimit: 0,
       scrollPos: 0,
       page: null,
-      clickEvent: null
+      clickEvent: null,
+      mouseEvent: null
     }
   },
   mounted() {
      // Defining only one click event listener here, to prevent possible memory leaks
-    // window.addEventListener("mousedown", this.clickEvents);
+    window.addEventListener("mousedown", this.mousedown);
     window.addEventListener("click", this.clickEvents);
+    window.addEventListener("touchstart", this.clickEvents);
     // window.addEventListener("touchstart", this.clickEvents);
 
    
@@ -130,7 +135,10 @@ p, li, div {
   pointer-events: none;
 }
 .shine-gradient {
-  background-image: url("./assets/BG Gradient.png");
+  background-image: url("./assets/BG-Gradient.png");
+//   background: rgb(207,209,189);
+// background: radial-gradient(circle, rgba(207,209,189,0.29597776610644255) 11%, rgba(218,219,212,0.22875087535014005) 28%, rgba(221,221,218,0.04667804621848737) 68%, rgba(224,224,224,0) 100%);
+
   position: fixed;
   // transform: translateY(-50%);
   top: -50vh;
@@ -150,9 +158,11 @@ p, li, div {
   z-index: 2;
 }
 #app {
-  background-color: $darkblue;
-  background-size: contain;
+  // background-color: $darkblue;
+  background-image: url("./assets/BG.jpg");
+  background-size: 100vw 150vh;
   background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 .page {
   z-index: 1;

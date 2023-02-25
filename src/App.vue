@@ -24,7 +24,7 @@ export default {
   watch: {
     scrollPos: {
       handler(scrollPos) {
-        console.log(scrollPos);
+        // console.log(scrollPos);
         let scrolledComponent = document.getElementById(toRaw(this.componentsIntegered)[this.positions.filter(item => scrollPos >= item).length - 1]);
         if (toRaw(this.positions).filter(item => scrollPos >= item).length > 0 && !scrolledComponent.className.includes("fadein")) {
           scrolledComponent.className += " fadein";
@@ -47,25 +47,26 @@ export default {
           data: {
             images: [
               {
-                  src: require("./assets/placeholdersize1.png"),
+                  src: require("./assets/iyd1.png"),
                   link: '',
                   offset: {x: 0, y: 0}
               },
               {
-                  src: require("./assets/placeholdersize1.png"),
+                  src: require("./assets/CDAP-image.png"),
                   link: '',
                   offset: {x: -80, y: 100}
               },
               {
-                  src: require("./assets/placeholdersize1.png"),
+                  src: require("./assets/goals.png"),
                   link: '',
                   offset: {x: 0, y: 0}
               }
             ],
-            cta_text: "Check out more of our services!",
+            cta_text: "We are the official Digital Advisor for Canada Digital Adoption Program (CDAP).",
+            text: 'We are certified by the Federal Government of Canada. Feel free to check the criteria to become an eligible business and click the icon at the right bottom corner to start a conversation. We are also more than welcome to receive your inquiry email.',
             cta: {
-              link: './our-services',
-              text: 'View All Services'
+              link: './cdap',
+              text: 'Learn More About CDAP'
             }
           }
         },
@@ -75,39 +76,48 @@ export default {
         },
         {
           component: 'GoldSquareSection',
-          data: {}
-        },
-        {
-          component: 'TextandFadedBG',
-          data: {}
+          data: {
+            title: "Clear Growth Strategy For Your Future.",
+            stagger_title: true,
+            text: "You need to have a clear vision for your company and a well-thought-out marketing strategy in order to grow sustainably. A strong business plan will help keep your company on track as you make decisions about where to allocate resources and energy, bring on partners, evaluate new opportunities and much more!",
+            image: ''
+          }
         },
         {
           component: 'ImagesGallery',
           data: {
             images: [
               {
-                  src: require("./assets/placeholdersize1.png"),
+                  src: require("./assets/iyd3.png"),
                   link: '',
                   offset: {x: 0, y: 0}
               },
               {
-                  src: require("./assets/placeholdersize1.png"),
+                  src: require("./assets/iyd6.png"),
                   link: '',
                   offset: {x: -80, y: 100}
               },
               {
-                  src: require("./assets/placeholdersize1.png"),
+                  src: require("./assets/iyd5.png"),
                   link: '',
                   offset: {x: 0, y: 0}
               }
             ],
-            cta_text: "See more of our work!",
+            cta_text: "Check out our services!",
             cta: {
               link: '',
-              text: 'See More'
-            }
+              text: 'services'
+            },
+            text_on_top: true
           }
         },
+        // {
+        //   component: 'TextandFadedBG',
+        //   data: {
+        //     title: "CRM",
+        //     text: "Customer satisfaction is the number one measure of success for your business"
+        //   }
+        // }
       ],
       componentsIntegered: [],
       positions: []
@@ -120,7 +130,7 @@ export default {
         // return (component.getBoundingClientRect().top - ((window.innerHeight - component.getBoundingClientRect().height) / 8)) + window.scrollY;
         return component.getBoundingClientRect().top - (window.innerHeight * .5);
       })
-      console.log(this.positions);
+      // console.log(this.positions);
     })
     
     this.componentsIntegered = [...this.components].map((item, i) => item.component+i);

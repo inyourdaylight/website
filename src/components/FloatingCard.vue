@@ -80,7 +80,7 @@ export default {
     }
 }
 .floating-card {
-    padding: 60px;
+    padding: 60px 100px;
     @media screen and (max-width: $mobiledown) {
         padding: 20px;
     }
@@ -105,5 +105,12 @@ export default {
 }
 .ctas {
     margin-top: 30px;
+    .cta:not(:hover) {
+        border: 1px solid $darkblue;
+        transition: all 1s ease;
+    }
+    .cta_text {
+        color: $darkblue;
+    }
 }
 </style>

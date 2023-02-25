@@ -5,8 +5,14 @@
     <img :src="data.image"/>
    </div>
    <div class="col text animate-fade-in animate-delay-250">
+    <small v-show="data.date">{{ data.date }}</small>
     <h2>{{ data.title }}</h2>
-        <p v-html="data.text"></p>
+        <p class="subtitle" v-html="data.text"></p>
+        <div class="ctas" v-show="data.cta_buttons">
+          <a v-for="(item, i) in data.cta_buttons" :key="i" class="cta" :href="item.link">
+            <p>{{ item.text }}</p>
+          </a>
+        </div>
     </div>
   </div>
 </template>
@@ -51,8 +57,8 @@ export default {
 .image {
   text-align: center;
   img {
-    width: 100%;
-      height: 100%;
+    width: auto;
+    height: auto;
     @media screen and (min-width: $mobileup) {
       max-height: 400px;
       max-width: 40vw;
@@ -60,6 +66,7 @@ export default {
     margin: auto;
     @media screen and (max-width: $mobiledown) {
       margin-bottom: 20px;
+      max-width: 100%;
     }
   }
 }
@@ -85,11 +92,19 @@ export default {
     .col {
       // padding: 0 20px;
       width: 100%;
-      h1,h2,h3,h4,h5,h6,span,p,ul,ol {
-       @media screen and (min-width: $mobileup) {
-        width: 80%;
-        margin: auto;
-       }
+      h1,h2,h3,h4,h5,h6,span,p,ul,ol, small, .ctas {
+        @media screen and (min-width: $mobileup) {
+          width: 80%;
+          margin: auto;
+          display: block;
+        }
+      }
+      h2 {
+        margin-bottom: 20px;
+      }
+      small {
+        margin-bottom: 10px;
+        opacity: .75;
       }
       // flex: 1;
     }
@@ -100,7 +115,7 @@ export default {
     display: block;
   }
   flex-direction: row-reverse;
-  h1,h2,h3,h4,h5,h6,span,p,ul,ol {
+  h1,h2,h3,h4,h5,h6,span,p,ul,ol,small, .ctas {
     margin-left: auto;
     // margin-left: auto;
   }
@@ -110,10 +125,15 @@ export default {
     margin-left: auto;
     display: block;
   }
-  h1,h2,h3,h4,h5,h6,span,p,ul,ol {
+  h1,h2,h3,h4,h5,h6,span,p,ul,ol, small, .ctas {
     margin-right: auto;
     // margin-left: auto;
   }
 }
-
+.ctas {
+  padding-top: 30px;
+}
+.subtitle:first-letter {
+    text-transform: uppercase;
+}
 </style>

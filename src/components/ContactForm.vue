@@ -2,21 +2,21 @@
   <div class="contactform">
     <div class="col animate-fade-in">
         <div class="text">
-            <h1>Contact Form</h1>
+            <h1>Contact Us</h1>
             <p>Feel free to reach us via the contact form! Or get in contact with us directly by the following links.</p>
             <div class="contacts">
                 <p>
-                    Email: <a href="mailto:info@inyourdaylight.com">info@inyourdaylight.com</a>
+                    <a href="mailto:info@inyourdaylight.com"><span><img class="icon" src="../assets/Email.svg"/></span> info@inyourdaylight.com</a>
                 </p>
                 <p>
-                    Phone: <a href="tel:6473587767">(647)-358-7767</a>
+                    <a href="tel:6473587767"> <span><img class="icon" src="../assets/Phone.svg"/></span> (647)-358-7767</a>
                 </p>
             </div>
     </div>
     </div>
     <div class="col">
    <div class="contact-form animate-fade-in animate-delay-250">
-    <form>
+    <form @submit.prevent="submitForm" ref="form">
         <div class="row">
             <label for="name"><p>Name</p></label>
             <input ref="name" required placeholder="eg. John Smith"/>
@@ -36,7 +36,7 @@
   
         <div class="row">
            <a class="cta">
-            <input type="submit" class="submit"/>
+            <input type="submit" class="submit" value="Submit"/>
            </a>
         </div>
     </form>
@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import industries from "../industries.js";
+import Email from "../smtp.js";
 
 export default {
   name: 'ContactForm',
@@ -57,77 +57,33 @@ export default {
     }
   },
   watch: {
-    clickEvents: {
-        handler(clickEvent) {
-            switch(clickEvent.target.className) {
-                case "dropdown closed": {
-                    clickEvent.target.getElementsByClassName("selection")[0].style.maxHeight = '400px';
-                    clickEvent.target.className = "dropdown open";
-                    clickEvent.target.getElementsByClassName("arrow")[0].className = "arrow up";
-                    break;
-                }
-                case "dropdown open": {
-                    clickEvent.target.getElementsByClassName("selection")[0].style.maxHeight = '0px';
-                    clickEvent.target.className = "dropdown closed";
-                    clickEvent.target.getElementsByClassName("arrow")[0].className = "arrow";
-                    break;
-                }
-                case "option industry": {
-                    clickEvent.target.parentElement.style.maxHeight = '0px';
-                    clickEvent.target.parentElement.parentElement.className = "dropdown closed";
-                    this.activeIndustry = clickEvent.target.innerHTML;
-                    clickEvent.target.parentElement.parentElement.getElementsByClassName("arrow")[0].className = "arrow";
-                    break;
-                }
-                case "option application": {
-                    clickEvent.target.parentElement.style.maxHeight = '0px';
-                    clickEvent.target.parentElement.parentElement.className = "dropdown closed";
-                    this.application = clickEvent.target.innerHTML;
-                    break;
-                }
-            }
-            
-        }
-    }
   },
   methods: {
-    doIndustrySearch(e) {
-        // Show dropdown
-        e.target.parentElement.parentElement.getElementsByClassName("selection")[0].style.maxHeight = '400px';
-        e.target.parentElement.className = "dropdown open";
-        e.target.parentElement.getElementsByClassName("arrow")[0].className = "arrow up";
-        // Current value is what user is typing in
-        this.activeIndustry = e.target.value;
-        // If not results found, display that in the dropdown
-        if ([...industries.list].filter(i => i.toLowerCase().includes(e.target.value.toLowerCase())).length === 0) {
-            this.industries = {
-                list: ['No results found.']
-            };
-            return;
+    submitForm() {
+        let data = `
+            Name: ${this.$refs.name.value}<br/>
+            Email: ${this.$refs.email.value}<br/>
+            Phone: ${this.$refs.phone.value}<br/>
+            Message: ${this.$refs.message.value}<br/>
+        `;
+        let obj = {
+            SecureToken : "bb206819-c4dc-44fc-b279-0eddc0804cf4",
+            To : 'grace.h@inyourdaylight.com',
+            From : "inyourdaylight123@gmail.com",
+            Subject : "Contact Form from Website",
+            Body : data
         }
-        this.industries = {
-            list: [...industries.list].filter(i => i.toLowerCase().includes(this.activeIndustry.toLowerCase()))
-        };
+        Email.send(obj).then((res) => {
+            console.log(res);
+            this.$refs.form.reset();
+        })
     },
-    handleChange(clickEvent) {
-        if ([...industries.list].indexOf(this.activeIndustry) < 0) {
-            this.activeIndustry = null;
-            this.industries = industries;
-        }
-        clickEvent.target.parentElement.getElementsByClassName("selection")[0].style.maxHeight = '0px';
-        clickEvent.target.parentElement.className = "dropdown closed";
-        clickEvent.target.parentElement.getElementsByClassName("arrow")[0].className = "arrow";
-    }
   },
   data() {
     return {
-        industries: industries,
-        activeIndustry: null,
-        application: "No"
     }
   },
   mounted() {
-    this.activeIndustry = this.industries.list[0];
   }
 }
 </script>
@@ -138,7 +94,7 @@ export default {
 .contactform {
     padding: 20px;
     @media screen and (min-width: $mobileup) {
-        padding: 20px 10%;
+        padding: 20px 100px;
     }
 }
 .text {
@@ -158,10 +114,14 @@ export default {
     max-width: 600px;
     margin: auto;
     padding: 40px;
+    @media screen and (max-width: $mobiledown) {
+        padding: 20px;
+    }
     border-radius: 20px;
     input:not(.submit, .radio), textarea {
         outline: none;
         border: none;
+        border-radius: 0;
         padding: 10px 0 5px;
         display: inline-block;
         vertical-align: top;
@@ -172,7 +132,7 @@ export default {
     }
     textarea {
         resize: none;
-        border: 1px solid $gold;
+        border: 1px solid white;
         padding: 10px;
         width: calc(75% - 20px);
         border-radius: 10px;
@@ -180,6 +140,7 @@ export default {
     }
 
     .cta {
+        text-transform: capitalize;
         &:hover {
             .submit {
                 color: $darkblue;
@@ -344,5 +305,11 @@ export default {
 }
 h1 {
     margin-bottom: 40px;
+}
+.icon {
+    width: 20px;
+    vertical-align: middle;
+    display: inline-block;
+    margin-right: 10px;
 }
 </style>

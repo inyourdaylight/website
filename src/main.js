@@ -24,6 +24,9 @@ import TimeMoon from './components/TimeMoon.vue';
 import GlowSphere from './components/GlowSphere.vue';
 import IYDLogo from './components/IYDLogo.vue';
 import ContactForm from './components/ContactForm.vue';
+import TimeSun from './components/TimeSun.vue';
+import FullSun from './components/FullSun.vue';
+import TextAlone from './components/TextAlone.vue';
 
 index.component('StickyScrollGallery', StickyScrollGallery);
 index.component('TextComponent', TextComponent);
@@ -43,6 +46,9 @@ index.component('TimeMoon', TimeMoon);
 index.component('GlowSphere', GlowSphere);
 index.component('IYDLogo', IYDLogo);
 index.component('ContactForm', ContactForm);
+index.component('TimeSun', TimeSun);
+index.component('FullSun', FullSun);
+index.component('TextAlone', TextAlone);
 
 index.use(router);
 index.mount('#app');

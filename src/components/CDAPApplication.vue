@@ -5,19 +5,21 @@
         <p class="animate-fade-in animate-delay-250">Feel free to fill out the application, to see if you are eligible for the CDAP Program!</p>
    </div>
    <div class="application-form animate-fade-in animate-delay-250">
-    <form>
+    <form @submit.prevent="submitForm" ref="form">
         <div class="row">
             <label for="name"><p>Name</p></label>
             <input ref="name" required placeholder="eg. John Smith"/>
         </div>
         <div class="row">
-            <label for="company-name"><p>Company Name</p></label>
-            <input ref="company-name" required placeholder="eg. In Your Daylight"/>
+            <label for="company_name"><p>Company Name</p></label>
+            <input ref="company_name" required placeholder="eg. In Your Daylight"/>
         </div>
         <div class="row">
             <label for="business"><p>Business Industry</p></label>
             <div name="business" class="dropdown closed">
                 <input required 
+                name="business"
+                ref="business"
                 class="dropdown-input"
                 :value="activeIndustry"
                 @input="doIndustrySearch" 
@@ -47,8 +49,8 @@
                     <p class="option application">No</p>
                     <p class="option application">Yes</p>
                 </div> -->
-                <input type="radio" checked name="app" class="radio" value="No"/> No
-                <input type="radio" name="app" class="radio" value="Yes"/> Yes
+                <input type="radio" ref="app" checked name="app" class="radio" value="No"/> No
+                <input type="radio" ref="app" name="app" class="radio" value="Yes"/> Yes
             </div>
         </div>
         <div class="row">
@@ -57,7 +59,7 @@
         </div>
         <div class="row">
            <a class="cta">
-            <input type="submit" class="submit"/>
+            <input type="submit" class="submit" value="Submit"/>
            </a>
         </div>
     </form>
@@ -67,7 +69,7 @@
 
 <script>
 import industries from "../industries.js";
-
+import Email from "../smtp.js";
 export default {
   name: 'CDAPApplication',
   props: {
@@ -111,6 +113,28 @@ export default {
     }
   },
   methods: {
+    submitForm() {
+        let data = `
+            Name: ${this.$refs.name.value}<br/>
+            Company Name: ${this.$refs.company_name.value}<br/>
+            Business: ${this.$refs.business.value}<br/>
+            Phone: ${this.$refs.phone.value}<br/>
+            Email: ${this.$refs.email.value}<br/>
+            CDAP Application previously started: ${this.$refs.app.value}<br/>
+            Referred by: ${this.$refs.refer.value}<br/>
+        `;
+        let obj = {
+            SecureToken : "bb206819-c4dc-44fc-b279-0eddc0804cf4",
+            To : 'grace.h@inyourdaylight.com',
+            From : "inyourdaylight123@gmail.com",
+            Subject : "CDAP Application from Website",
+            Body : data
+        }
+        Email.send(obj).then((res) => {
+            console.log(res);
+            this.$refs.form.reset();
+        })
+    },
     doIndustrySearch(e) {
         // Show dropdown
         e.target.parentElement.parentElement.getElementsByClassName("selection")[0].style.maxHeight = '400px';
@@ -167,10 +191,14 @@ export default {
     max-width: 600px;
     margin: 40px auto auto;
     padding: 40px;
+    @media screen and (max-width: $mobiledown) {
+        padding: 20px;
+    }
     border-radius: 20px;
     input:not(.submit, .radio) {
         outline: none;
         border: none;
+        border-radius: 0;
         padding: 10px 0 0;
         display: inline-block;
         vertical-align: middle;
@@ -182,6 +210,7 @@ export default {
     }
 
     .cta {
+            text-transform: capitalize;
         &:hover {
             .submit {
                 color: $darkblue;

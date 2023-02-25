@@ -17,7 +17,7 @@
                     </span>
                 </div>
             </h2>
-            <p class="blurb animate-fade-in animate-delay-250">Overall, your brand or company's goal is to make higher revenue or to scale up. But before you do it, you should check if you are customer-centric..</p>
+            <!-- <p class="blurb animate-fade-in animate-delay-250">Overall, your brand or company's goal is to make higher revenue or to scale up. But before you do it, you should check if you are customer-centric..</p> -->
         </div>
   </div>
 </template>
@@ -61,7 +61,7 @@ export default {
       //   'Français',
       //   'English'
       // ],
-      text: `한국어 &nbsp;&nbsp; 中文 &nbsp;&nbsp; Français &nbsp;&nbsp; English &nbsp;`,
+      text: `한국어 &nbsp;&nbsp; 中文 &nbsp;&nbsp; English &nbsp;`,
       rowWidth:0,
       timeline: new gsap.timeline({repeat: -1}),
       titleCount:2,

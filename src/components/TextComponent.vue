@@ -1,17 +1,19 @@
 <template>
-  <div :class="`textcomponent ${data.textalign}`" v-if="data">
+  <div :class="`textcomponent ${data.textalign} column-count-${data.columns}`" v-if="data">
    <div class="title col animate-fade-in" :style="`width: calc(${100 / data.columns}% - 40px)`">
     <div class="title-inner">
-        <h1 class="largeh1 animate-fade-in">{{ data.title }}</h1>
-        <p class="subtitle animate-fade-in animate-delay-250">{{ data.subtitle }}</p>
+        <h1 class="largeh1 animate-fade-in" v-html="data.title"></h1>
+        <h2 class="subtitle animate-fade-in animate-delay-250">{{ data.subtitle }}</h2>
+        <br/>
+        <small v-show="data.date" class="meta">{{data.date}}</small>
         <div class="ctas" v-show="data.cta_buttons">
-      <a v-for="(item, i) in data.cta_buttons" :key="i" class="cta" :href="item.link">
-        <p>{{ item.text }}</p>
-      </a>
-    </div>
+          <a v-for="(item, i) in data.cta_buttons" :key="i" class="cta" :href="item.link">
+            <p>{{ item.text }}</p>
+          </a>
+        </div>
     </div>
    </div>
-   <div class="text col animate-fade-in animate-delay-250">
+   <div class="text col animate-fade-in animate-delay-250" v-show="data.text">
     <span v-html="data.text"></span>
     <!-- <div class="ctas" v-show="data.cta_buttons">
       <a v-for="(item, i) in data.cta_buttons" :key="i" class="cta" :href="item.link">
@@ -64,7 +66,7 @@ export default {
 @import "../fonts.scss";
 
 .textcomponent {
-    padding: 20px 10%;
+    padding: 20px 100px;
     @media screen and (max-width: $mobiledown) {
       padding: 20px;
     }
@@ -78,6 +80,7 @@ export default {
 .text-align-right {
   text-align: right;
 }
+
 .title-inner {
     // max-width: 400px;
     width: 100%;
@@ -88,8 +91,19 @@ export default {
     @media screen and (max-width: $mobiledown) {
       width: 100% !important;
     }
-    vertical-align: top;
+    vertical-align: middle;
 }
+.title {
+  width: 50%;
+}
+.column-count-1 {
+    .title {
+      display: block;
+      margin: auto;
+      max-width: 700px;
+  }
+}
+
 h1 {
     margin-top: 0;
     margin-bottom: 40px;
@@ -128,12 +142,35 @@ h1 {
         }
     }
 }
+.largeh1 {
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+  text-transform: capitalize;
+}
 .subtitle {
   // width: 100%;
-  display: inline-block;
+  // display: inline-block;
+  margin-top: 0;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 700px;
+  color: white;
+  font-family: $body;
+  font-size: 30px;
 }
 .cta {
+  text-transform: capitalize;
   width: calc(100% - 30px);
   margin-top: 40px;
+}
+.meta {
+  color: grey;
+  width: 100%;
+  display: block;
+  max-width: 700px;
+  margin: auto;
+  text-align: left;
 }
 </style>

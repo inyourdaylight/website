@@ -8,6 +8,20 @@
             </router-link></h1>
            </transition>
         </li>
+        <ul class="languages">
+          <li class="active">
+            EN
+          </li>
+          <li>
+            FR
+          </li>
+          <li>
+            한국어
+          </li>
+          <li>
+            中文
+          </li>
+      </ul>
     </ul>
   </div>
 </template>
@@ -88,5 +102,18 @@ a {
 .menu-item-enter-active {
     transform: translateY(100%);
     opacity: 0;
+}
+.languages {
+  list-style: none;
+  padding: 0;
+  padding-top: 20px;
+  line-height: 2;
+  li {
+    color: $darkblue;
+  }
+.active {
+    text-decoration: underline;
+    font-family: $bodybold;
+  }
 }
 </style>

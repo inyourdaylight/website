@@ -13,6 +13,10 @@
 export default {
   name: 'ErrorPage',
   props: {
+    data: {
+      type: Object,
+      default: () => {}
+    }
   },
   watch: {},
   methods: {

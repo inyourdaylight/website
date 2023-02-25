@@ -31,12 +31,14 @@
       </a>
     </div>
     <transition :key="hour+minute" appear>
-            <p :class="`time ${showNav ? `blue` : ``}`">
-              <TimeSun class="sun" v-show="hour < 18" :color="showNav ? `#1B2227` : ``"></TimeSun>
-              <TimeMoon class="sun" v-show="hour > 18" :color="showNav ? `#1B2227` : ``"></TimeMoon>
-              <span v-html="hour"></span><span>:</span><span v-html="minute"></span>
-            </p>
-          </transition>
+      <a href="./">
+        <p :class="`time ${showNav ? `blue` : ``}`">
+        <TimeSun class="sun" v-show="hour < 18" :color="showNav ? `#1B2227` : ``"></TimeSun>
+        <TimeMoon class="sun" v-show="hour > 18" :color="showNav ? `#1B2227` : ``"></TimeMoon>
+        <span v-html="hour"></span><span>:</span><span v-html="minute"></span>
+      </p>
+      </a>
+    </transition>
     <div class="desktop-nav">
       <ul class="menuleft">
         <li v-for="(item, i) in menuleft" :key="i" class="menuitemleft">
@@ -178,7 +180,7 @@ export default {
   color: white;
   position: fixed;
   z-index: 10;
-  top: 20px;
+  top: 26px;
   transition: all .5s ease .5s;
   left: 20px;
   margin: 0;
@@ -198,6 +200,9 @@ export default {
 .logo {
   position: fixed;
   left: 50%;
+  :deep svg {
+    height: 50px;
+  }
   // left: 140px;
   top: 20px;
   transform: translateX(-50%) translateY(-50%);
@@ -207,6 +212,7 @@ export default {
   vertical-align: middle;
 }
 .scrollbar {
+  cursor: pointer;
   position: fixed;
   right: 30px;
   height: 50vh;

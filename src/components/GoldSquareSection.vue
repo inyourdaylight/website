@@ -2,30 +2,37 @@
   <div class="golden-section">
    <div class="section-outer">
       <div class="section">
-      <img class="image" src="../assets/placeholder.png"/>
+      <img class="image" src="../assets/iyd2.png"/>
       <div class="text">
           <table>
             <tr class="row">
               <td class="left">
-                <h2 class="animate-fade-right animate-delay-250">Create</h2>
+                <h2 class="animate-fade-right animate-delay-250">Clear</h2>
               </td>
               <td class="right">
-                <h2 class="animate-fade-left animate-delay-500">Your</h2>
+                <h2 class="animate-fade-left animate-delay-500">growth</h2>
               </td>
             </tr>
             <tr class="row">
               <td class="left">
-                <h2 class="animate-fade-right animate-delay-750">Own</h2>
+                <h2 class="animate-fade-right animate-delay-750">strategy</h2>
               </td>
               <td class="right">
-                <h2 class="animate-fade-left animate-delay-1000">Value</h2>
+                <h2 class="animate-fade-left animate-delay-1000">for</h2>
+              </td>
+            </tr>
+            <tr class="row">
+              <td class="left">
+                <h2 class="animate-fade-right animate-delay-750">your</h2>
+              </td>
+              <td class="right">
+                <h2 class="animate-fade-left animate-delay-1000">future.</h2>
               </td>
             </tr>
             <tr class="text-tr">
               <td>
                 <p class="animate-fade-in">
-                  Overall, your brand or company's goal is to make higher revenue or to scale up.
-                  But before you do it, you should check if you are customer-centric, which means that your business is done with setting up all the ways that people can find you and get to know you.
+                  You need to have a clear vision for your company and a well-thought-out marketing strategy in order to grow sustainably. A strong business plan will help keep your company on track as you make decisions about where to allocate resources and energy, bring on partners, evaluate new opportunities and much more!
                 </p>
               </td>
             </tr>
@@ -49,6 +56,10 @@ export default {
     clickEvents: {
       type: Object,
       default: () => {}
+    },
+    data: {
+      type: Object,
+      default: () => {}
     }
   },
   watch: {
@@ -59,10 +70,11 @@ export default {
   },
   data() {
     return {
-      
+      split_title: []
     }
   },
   mounted() {
+    this.split_title = this.data.title.split(" ");
   }
 }
 </script>
@@ -170,7 +182,7 @@ table {
     margin: auto;
     text-align: center;
     padding-bottom: 10px;
-    width: calc(100% - 10px);
+    width: calc(100% - 40px);
   }
 }
 .text-tr {

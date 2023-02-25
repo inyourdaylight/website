@@ -59,6 +59,7 @@ export default {
   mounted() {
     try {
       this.page = this.$cms.routes.filter(i => i.path === window.location.pathname)[0];
+      console.log(this.$cms.routes);
     } catch {
       console.log("page doesn't exist");
       window.location.href="./404";

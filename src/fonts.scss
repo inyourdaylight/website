@@ -28,6 +28,17 @@ $bodyfont: "Reader";
         font-weight: 400;
         font-style: normal;
 }
+$bodyboldfont: "Reader-Bold";
+@font-face {
+    font-family: 'BodyBold';
+    src: url('@/assets/fonts/Body/' + $bodyboldfont + '.ttf') format('truetype');
+    src:url('@/assets/fonts/Body/' + $bodyboldfont + '.woff2') format('woff2'),
+        url('@/assets/fonts/Body/' + $bodyboldfont + '.woff') format('woff'),
+        url('@/assets/fonts/Body/' + $bodyboldfont + '.eot') format('embedded-opentype');
+        font-weight: 400;
+        font-style: normal;
+}
 $heading: "Heading";
 $subheading: "Subheading";
 $body: "Body";
+$bodybold: "BodyBold";

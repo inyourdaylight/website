@@ -23,9 +23,18 @@ $mobiledown: 1000px;
     -moz-user-drag: none;
     -o-user-drag: none;
     user-drag: none;
+    font-weight:300;
+
     ::-webkit-scrollbar {
         display: none;
     }
+}
+img {
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 .gold {
     color: $gold;
@@ -68,64 +77,64 @@ h2 {
     text-transform:capitalize;
     color: $gold;
 }
-.animate-fade-in {
-    transform: translateY(100%);
-    opacity: 0;
-    transition: all 1000ms cubic-bezier(0.355, 0.005, 0.240, 0.990); /* custom */
-    transition-timing-function: cubic-bezier(0.355, 0.005, 0.240, 0.990); /* custom */
-}
-.animate-fade-right {
-    transform: translateX(100%);
-    opacity: 0;
-    transition: all 1000ms cubic-bezier(0.355, 0.005, 0.240, 0.990); /* custom */
-    transition-timing-function: cubic-bezier(0.355, 0.005, 0.240, 0.990); /* custom */
-}
-.animate-fade-left {
-    transform: translateX(-100%);
-    opacity: 0;
-    transition: all 1000ms cubic-bezier(0.355, 0.005, 0.240, 0.990); /* custom */
-    transition-timing-function: cubic-bezier(0.355, 0.005, 0.240, 0.990); /* custom */
-}
-.fadein {
-    .animate-fade-in {
-        transform: translateY(0%);
-        opacity: 1;
-        transition: all 1000ms cubic-bezier(0.355, 0.005, 0.240, 0.990); /* custom */
-        transition-timing-function: cubic-bezier(0.355, 0.005, 0.240, 0.990); /* custom */
-    }
-    .animate-fade-right {
-        transform: translateX(0%);
-        opacity: 1;
-        transition: all 1000ms cubic-bezier(0.355, 0.005, 0.240, 0.990); /* custom */
-        transition-timing-function: cubic-bezier(0.355, 0.005, 0.240, 0.990); /* custom */
-    }
-    .animate-fade-left {
-        transform: translateX(0%);
-        opacity: 1;
-        transition: all 1000ms cubic-bezier(0.355, 0.005, 0.240, 0.990); /* custom */
-        transition-timing-function: cubic-bezier(0.355, 0.005, 0.240, 0.990); /* custom */
-    }
-    .animate-delay-250 {
-        transition-delay: 250ms;
-    }
-    .animate-delay-500 {
-        transition-delay: 500ms;
-    }
-    .animate-delay-750 {
-        transition-delay: 750ms;
-    }
-    .animate-delay-1000 {
-        transition-delay: 1000ms;
-    }
-}
+// .animate-fade-in {
+//     transform: translateY(100%);
+//     opacity: 0;
+//     transition: all 1000ms cubic-bezier(0.355, 0.005, 0.240, 0.990); /* custom */
+//     transition-timing-function: cubic-bezier(0.355, 0.005, 0.240, 0.990); /* custom */
+// }
+// .animate-fade-right {
+//     transform: translateX(100%);
+//     opacity: 0;
+//     transition: all 1000ms cubic-bezier(0.355, 0.005, 0.240, 0.990); /* custom */
+//     transition-timing-function: cubic-bezier(0.355, 0.005, 0.240, 0.990); /* custom */
+// }
+// .animate-fade-left {
+//     transform: translateX(-100%);
+//     opacity: 0;
+//     transition: all 1000ms cubic-bezier(0.355, 0.005, 0.240, 0.990); /* custom */
+//     transition-timing-function: cubic-bezier(0.355, 0.005, 0.240, 0.990); /* custom */
+// }
+// .fadein {
+//     .animate-fade-in {
+//         transform: translateY(0%);
+//         opacity: 1;
+//         transition: all 1000ms cubic-bezier(0.355, 0.005, 0.240, 0.990); /* custom */
+//         transition-timing-function: cubic-bezier(0.355, 0.005, 0.240, 0.990); /* custom */
+//     }
+//     .animate-fade-right {
+//         transform: translateX(0%);
+//         opacity: 1;
+//         transition: all 1000ms cubic-bezier(0.355, 0.005, 0.240, 0.990); /* custom */
+//         transition-timing-function: cubic-bezier(0.355, 0.005, 0.240, 0.990); /* custom */
+//     }
+//     .animate-fade-left {
+//         transform: translateX(0%);
+//         opacity: 1;
+//         transition: all 1000ms cubic-bezier(0.355, 0.005, 0.240, 0.990); /* custom */
+//         transition-timing-function: cubic-bezier(0.355, 0.005, 0.240, 0.990); /* custom */
+//     }
+//     .animate-delay-250 {
+//         transition-delay: 250ms;
+//     }
+//     .animate-delay-500 {
+//         transition-delay: 500ms;
+//     }
+//     .animate-delay-750 {
+//         transition-delay: 750ms;
+//     }
+//     .animate-delay-1000 {
+//         transition-delay: 1000ms;
+//     }
+// }
 p {
     line-height: 1.5;
     font-size: 16px;
     @media screen and (max-width: $tablet) {
-        font-size: 13px;
+        font-size: 16px;
     }
     @media screen and (max-width: $mobile) {
-        font-size: 12px;
+        font-size: 14px;
     }
     font-weight: normal;
     font-family: $body;
@@ -134,7 +143,7 @@ p {
 a {
     text-decoration: none;
 }
-a:not(.cta) { 
+a:not(.cta, .router-link-active, .home-link) { 
     position: relative;
     // font-size: 14px;
     text-decoration: none;
@@ -184,10 +193,11 @@ a:not(.cta) {
 .fullwidthcta {
     width: 100%;
 }
-.cta {
+.cta, .filled {
     border-radius: 100px;
-    background: $turquoise;
-    border: none;
+    // background: $turquoise;
+    // border: none;
+    border: 1px solid white;
     color: white;
     padding: 13px 15px 10px;
     min-width: 140px;
@@ -223,8 +233,10 @@ a:not(.cta) {
     &:hover {
         transition: all 1000ms cubic-bezier(0.355, 0.005, 0.240, 0.990); /* custom */
         transition-timing-function: cubic-bezier(0.355, 0.005, 0.240, 0.990); /* custom */
+        border: 1px solid $gold;
+
         p {
-            color: $blue;
+            color: $darkblue;
             transition: all 1000ms cubic-bezier(0.355, 0.005, 0.240, 0.990); /* custom */
             transition-timing-function: cubic-bezier(0.355, 0.005, 0.240, 0.990); /* custom */
         }
@@ -232,6 +244,10 @@ a:not(.cta) {
             width: 100%;
         }
     }
+}
+.filled {
+    background: white;
+    color: $darkblue;
 }
 input:not(.dropdown-input), textarea {
     &::placeholder {
@@ -241,12 +257,12 @@ input:not(.dropdown-input), textarea {
     }
 }
 .router-link-active {
-    font-weight: bold;
     @media screen and (min-width: $mobileup) {
         background: $gold;
         padding: 6px 6px 4px;
         color: $darkblue !important;
         border-radius: 20px;
+        font-family: $bodybold;
     }
     @media screen and (max-width: $mobiledown) {
         background: $darkblue;
